@@ -2,22 +2,22 @@
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, PresentationControls, Environment, ContactShadows } from '@react-three/drei';
-import { Mesh } from 'three';
+import { Group } from 'three';
 
 const FingerPrintModel = () => {
-  const meshRef = useRef<Mesh>(null);
+  const groupRef = useRef<Group>(null);
   
   useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.3) * 0.1;
-      meshRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.2) * 0.05;
+    if (groupRef.current) {
+      groupRef.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.3) * 0.1;
+      groupRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.2) * 0.05;
     }
   });
 
   // We're creating a stylized fingerprint scanner model with Three.js primitives
   return (
     <>
-      <group ref={meshRef} position={[0, 0, 0]}>
+      <group ref={groupRef} position={[0, 0, 0]}>
         {/* Base */}
         <mesh position={[0, -0.5, 0]}>
           <cylinderGeometry args={[1.5, 1.7, 0.2, 32]} />

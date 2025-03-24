@@ -1,12 +1,18 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Vector3 } from 'three';
 import * as THREE from 'three';
 
+// Type definitions for our network points
+interface NetworkPoint {
+  position: [number, number, number];
+  connections: number[];
+}
+
 // Generate random points for the network
-const generatePoints = (count: number, size: number) => {
+const generatePoints = (count: number, size: number): NetworkPoint[] => {
   const points = [];
   for (let i = 0; i < count; i++) {
     points.push({
@@ -34,7 +40,8 @@ const generatePoints = (count: number, size: number) => {
 };
 
 const Network = () => {
-  const points = generatePoints(30, 5);
+  // Use useMemo to generate points only once
+  const points = useMemo(() => generatePoints(30, 5), []);
   const linesRef = useRef<THREE.Group>(null);
   const nodesRef = useRef<THREE.Group>(null);
 
@@ -55,7 +62,7 @@ const Network = () => {
       {/* Nodes */}
       <group ref={nodesRef}>
         {points.map((point, i) => (
-          <mesh key={`node-${i}`} position={new Vector3(...point.position)}>
+          <mesh key={`node-${i}`} position={new Vector3(point.position[0], point.position[1], point.position[2])}>
             <sphereGeometry args={[0.05, 16, 16]} />
             <meshStandardMaterial 
               color={i % 3 === 0 ? "#00ffcc" : i % 3 === 1 ? "#2563eb" : "#a855f7"} 
@@ -70,8 +77,12 @@ const Network = () => {
       <group ref={linesRef}>
         {points.map((point, i) => 
           point.connections.map((target, j) => {
-            const start = new Vector3(...point.position);
-            const end = new Vector3(...points[target].position);
+            const start = new Vector3(point.position[0], point.position[1], point.position[2]);
+            const end = new Vector3(
+              points[target].position[0], 
+              points[target].position[1], 
+              points[target].position[2]
+            );
             
             // Calculate the midpoint and add some curve
             const mid = new Vector3().addVectors(start, end).divideScalar(2);
@@ -79,18 +90,21 @@ const Network = () => {
             
             // Create a curve
             const curve = new THREE.QuadraticBezierCurve3(start, mid, end);
-            const points = curve.getPoints(20);
-            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const curvePoints = curve.getPoints(20);
+            const geometry = new THREE.BufferGeometry().setFromPoints(curvePoints);
             
             return (
-              <line key={`line-${i}-${j}`} geometry={geometry}>
-                <lineBasicMaterial 
-                  color={i % 2 === 0 ? "#00ffcc" : "#2563eb"} 
-                  opacity={0.3} 
-                  transparent={true} 
-                  linewidth={1}
-                />
-              </line>
+              <primitive 
+                key={`line-${i}-${j}`} 
+                object={new THREE.Line(
+                  geometry,
+                  new THREE.LineBasicMaterial({ 
+                    color: i % 2 === 0 ? "#00ffcc" : "#2563eb", 
+                    opacity: 0.3, 
+                    transparent: true 
+                  })
+                )}
+              />
             );
           })
         )}

@@ -10,6 +10,15 @@ import TransactionItem from '@/components/wallet/TransactionItem';
 import NetworkVisualization from '@/components/3d/NetworkVisualization';
 import FingerprintModelCanvas from '@/components/3d/FingerprintModel';
 
+// Assuming TransactionItem expects these props based on TypeScript errors
+interface CustomTransactionItemProps {
+  description: string;
+  amount: number;
+  date: string;
+  status: "completed" | "pending" | "failed";
+  type: "incoming" | "outgoing";
+}
+
 const Dashboard = () => {
   return (
     <MainLayout>
@@ -179,32 +188,32 @@ const Dashboard = () => {
                     <CardContent>
                       <div className="space-y-4">
                         <TransactionItem 
-                          name="Grocery Store"
-                          amount="-₹1,250.00"
+                          description="Grocery Store"
+                          amount={-1250}
                           date="Today, 14:32 PM"
                           status="completed"
-                          type="payment"
+                          type="outgoing"
                         />
                         <TransactionItem 
-                          name="John Smith"
-                          amount="+₹850.00"
+                          description="John Smith"
+                          amount={850}
                           date="Yesterday, 10:15 AM"
                           status="completed"
-                          type="credit"
+                          type="incoming"
                         />
                         <TransactionItem 
-                          name="Coffee Shop"
-                          amount="-₹180.00"
+                          description="Coffee Shop"
+                          amount={-180}
                           date="Mar 24, 2023"
                           status="completed"
-                          type="payment"
+                          type="outgoing"
                         />
                         <TransactionItem 
-                          name="Mobile Recharge"
-                          amount="-₹499.00"
+                          description="Mobile Recharge"
+                          amount={-499}
                           date="Mar 22, 2023"
                           status="completed"
-                          type="payment"
+                          type="outgoing"
                         />
                       </div>
                     </CardContent>
