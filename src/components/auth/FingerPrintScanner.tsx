@@ -48,14 +48,13 @@ const FingerPrintScanner: React.FC<FingerPrintScannerProps> = ({
       <div 
         onClick={handleScan}
         className={cn(
-          "relative w-32 h-32 rounded-full flex items-center justify-center cursor-pointer",
-          "transition-all duration-300 ease-in-out",
+          "relative w-36 h-36 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 ease-in-out shadow-lg",
           scanning ? "bg-primary/20" : "bg-secondary hover:bg-secondary/80",
           scanning && "scan-animation"
         )}
       >
         <Fingerprint 
-          size={72} 
+          size={80} 
           className={cn(
             "transition-all duration-300",
             scanning ? "text-primary animate-pulse-subtle" : "text-muted-foreground"
@@ -69,22 +68,22 @@ const FingerPrintScanner: React.FC<FingerPrintScannerProps> = ({
           >
             <circle
               className="text-primary/10"
-              strokeWidth="5"
+              strokeWidth="4"
               stroke="currentColor"
               fill="transparent"
-              r="45"
+              r="46"
               cx="50"
               cy="50"
             />
             <circle
               className="text-primary transition-all duration-300 ease-in-out"
-              strokeWidth="5"
-              strokeDasharray={2 * Math.PI * 45}
-              strokeDashoffset={2 * Math.PI * 45 * (1 - scanProgress / 100)}
+              strokeWidth="4"
+              strokeDasharray={2 * Math.PI * 46}
+              strokeDashoffset={2 * Math.PI * 46 * (1 - scanProgress / 100)}
               strokeLinecap="round"
               stroke="currentColor"
               fill="transparent"
-              r="45"
+              r="46"
               cx="50"
               cy="50"
             />
@@ -92,10 +91,17 @@ const FingerPrintScanner: React.FC<FingerPrintScannerProps> = ({
         )}
       </div>
       
-      <p className="mt-4 text-sm text-muted-foreground">
+      <p className="mt-6 text-sm font-medium text-center">
         {scanning 
           ? "Processing fingerprint..." 
           : "Tap to scan your fingerprint"
+        }
+      </p>
+      
+      <p className="mt-2 text-xs text-muted-foreground max-w-xs text-center">
+        {scanning 
+          ? "Please keep your finger on the sensor" 
+          : "Place your finger on the scanner to authenticate"
         }
       </p>
     </div>

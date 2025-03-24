@@ -151,3 +151,35 @@
   background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.3), transparent);
   animation: scan 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
+
+/* Button animations */
+.btn-hover-effect {
+  @apply relative overflow-hidden;
+}
+
+.btn-hover-effect::after {
+  content: '';
+  @apply absolute inset-0 scale-x-0 origin-left transition-transform duration-300 ease-out bg-white/20;
+}
+
+.btn-hover-effect:hover::after {
+  @apply scale-x-100;
+}
+
+/* Card hover effects */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-lg hover:border-primary/30;
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60;
+}
+
+/* G.S. Dhakad special signature style */
+.author-signature {
+  @apply font-semibold text-sm relative;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
