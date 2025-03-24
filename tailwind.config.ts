@@ -65,6 +65,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Holographic effect colors
+				holographic: {
+					'cyan': '#00ffcc',
+					'blue': '#0070f3',
+					'purple': '#7928ca',
+					'dark': '#05081F',
+					'darker': '#030619',
 				}
 			},
 			borderRadius: {
@@ -100,6 +108,14 @@ export default {
 				'pulse-subtle': {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0.8' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' }
+				},
+				'glow': {
+					'0%, 100%': { opacity: '0.5' },
+					'50%': { opacity: '1' }
 				}
 			},
 			animation: {
@@ -109,7 +125,13 @@ export default {
 				'fade-out': 'fade-out 0.3s ease-out',
 				'slide-up': 'slide-up 0.4s ease-out',
 				'slide-down': 'slide-down 0.4s ease-out',
-				'pulse-subtle': 'pulse-subtle 2s infinite ease-in-out'
+				'pulse-subtle': 'pulse-subtle 2s infinite ease-in-out',
+				'float': 'float 6s infinite ease-in-out',
+				'glow': 'glow 3s infinite ease-in-out'
+			},
+			backgroundImage: {
+				'network-grid': 'linear-gradient(to right, rgba(0, 255, 204, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 255, 204, 0.1) 1px, transparent 1px)',
+				'holographic-gradient': 'linear-gradient(135deg, rgba(0, 255, 204, 0.2), rgba(0, 112, 243, 0.2), rgba(121, 40, 202, 0.2))',
 			}
 		}
 	},
