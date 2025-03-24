@@ -5,8 +5,16 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
 interface WalletCardProps {
-  balance: number;
+  title?: string;
+  balance?: number;
+  value?: number;
   currency?: string;
+  icon?: React.ReactNode;
+  trend?: {
+    value: number;
+    direction: 'up' | 'down';
+    text: string;
+  };
   lastTransaction?: {
     amount: number;
     type: 'incoming' | 'outgoing';
@@ -17,13 +25,18 @@ interface WalletCardProps {
 }
 
 const WalletCard: React.FC<WalletCardProps> = ({
+  title,
   balance,
+  value,
   currency = "₹",
+  icon,
+  trend,
   lastTransaction,
   onAddFunds,
   className,
 }) => {
   const [hideBalance, setHideBalance] = React.useState(false);
+  const displayValue = value !== undefined ? value : balance;
 
   return (
     <div 
@@ -47,8 +60,9 @@ const WalletCard: React.FC<WalletCardProps> = ({
       
       <div className="relative">
         <div className="flex items-center justify-between mb-2">
+          {icon && <div className="mb-4">{icon}</div>}
           <h3 className="text-sm font-medium text-white/80">
-            Available Balance
+            {title || "Available Balance"}
           </h3>
           <button
             onClick={() => setHideBalance(!hideBalance)}
@@ -71,10 +85,22 @@ const WalletCard: React.FC<WalletCardProps> = ({
             </span>
           ) : (
             <span className="text-white text-3xl font-semibold tracking-tight">
-              {balance.toLocaleString()}
+              {displayValue?.toLocaleString()}
             </span>
           )}
         </div>
+        
+        {trend && (
+          <div className="mt-2 flex items-center">
+            <span className={cn(
+              "text-sm",
+              trend.direction === 'up' ? "text-green-400" : "text-red-400"
+            )}>
+              {trend.direction === 'up' ? '↑' : '↓'} {trend.value}%
+            </span>
+            <span className="text-white/60 text-xs ml-1">{trend.text}</span>
+          </div>
+        )}
         
         {lastTransaction && (
           <div className="mt-5 p-3 bg-white/10 rounded-lg backdrop-blur-sm">

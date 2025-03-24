@@ -6,7 +6,6 @@ import MainLayout from '@/components/layout/MainLayout';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { ArrowUpRight, ArrowDownRight, DollarSign, CreditCard, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import WalletCard from '@/components/wallet/WalletCard';
 import TransactionItem from '@/components/wallet/TransactionItem';
 
@@ -39,25 +38,25 @@ const Dashboard = () => {
       id: 1,
       amount: 45.99,
       type: 'outgoing' as const,
-      date: 'Today, 13:45'
+      date: 'Today, 14:35'
     },
     {
       id: 2,
       amount: 1250.00,
       type: 'incoming' as const,
-      date: 'Yesterday, 09:15'
+      date: 'Yesterday, 09:10'
     },
     {
       id: 3,
       amount: 29.99,
       type: 'outgoing' as const,
-      date: '24 Jun, 18:30'
+      date: 'Jun 24, 19:45'
     },
     {
       id: 4,
       amount: 120.50,
       type: 'incoming' as const,
-      date: '22 Jun, 14:00'
+      date: 'Jun 22, 14:00'
     }
   ];
 

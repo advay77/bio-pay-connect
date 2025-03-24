@@ -16,15 +16,33 @@ export interface Transaction {
 }
 
 interface TransactionItemProps {
-  transaction: Transaction;
+  transaction?: Transaction;
+  merchant?: string;
+  amount?: number;
+  date?: string;
+  status?: string;
+  type?: string;
   className?: string;
 }
 
 const TransactionItem: React.FC<TransactionItemProps> = ({
   transaction,
+  merchant,
+  amount: propAmount,
+  date: propDate,
+  status: propStatus,
+  type: propType,
   className
 }) => {
-  const { type, amount, currency = "₹", recipient, sender, date, time, status } = transaction;
+  // Use transaction object if provided, otherwise use individual props
+  const type = transaction?.type || propType;
+  const amount = transaction?.amount || propAmount || 0;
+  const currency = transaction?.currency || "₹";
+  const recipient = transaction?.recipient || merchant;
+  const sender = transaction?.sender || merchant;
+  const date = transaction?.date || propDate || '';
+  const time = transaction?.time || '';
+  const status = transaction?.status || propStatus || 'completed';
   
   return (
     <div className={cn(
@@ -54,8 +72,12 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
           </p>
           <div className="flex items-center mt-1 text-xs text-muted-foreground">
             <span>{date}</span>
-            <span className="mx-1">•</span>
-            <span>{time}</span>
+            {time && (
+              <>
+                <span className="mx-1">•</span>
+                <span>{time}</span>
+              </>
+            )}
             <span className="mx-1">•</span>
             <span className={cn(
               "capitalize",
