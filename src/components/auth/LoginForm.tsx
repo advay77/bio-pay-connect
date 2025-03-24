@@ -13,12 +13,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Fingerprint } from 'lucide-react';
+import { Fingerprint, Loader2, SmartphoneIcon } from 'lucide-react';
 import FingerPrintScanner from './FingerPrintScanner';
+import OtpVerification from './OtpVerification';
+import { toast } from "sonner";
+
+const mobileRegex = /^[6-9]\d{9}$/;
 
 const formSchema = z.object({
-  mobile: z.string().min(10, {
-    message: "Mobile number must be at least 10 digits.",
+  mobile: z.string().regex(mobileRegex, {
+    message: "Please enter a valid 10-digit Indian mobile number",
   }),
 });
 
@@ -29,7 +33,8 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
-  const [showScanner, setShowScanner] = useState(false);
+  const [stage, setStage] = useState<'form' | 'otp' | 'fingerprint'>('form');
+  const [sendingOtp, setSendingOtp] = useState(false);
   const [mobile, setMobile] = useState("");
   
   const form = useForm<FormValues>({
@@ -41,7 +46,24 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
   const handleFormSubmit = (values: FormValues) => {
     setMobile(values.mobile);
-    setShowScanner(true);
+    setSendingOtp(true);
+    
+    // Simulate sending OTP (replace with actual API call)
+    setTimeout(() => {
+      setSendingOtp(false);
+      setStage('otp');
+      toast.success("OTP sent to your mobile number");
+    }, 1500);
+  };
+
+  const handleOtpVerify = (success: boolean) => {
+    if (success) {
+      setStage('fingerprint');
+    }
+  };
+
+  const handleOtpResend = () => {
+    // Logic for resending OTP is handled within the OtpVerification component
   };
 
   const handleFingerprintComplete = (success: boolean) => {
@@ -57,7 +79,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
   return (
     <div className="w-full max-w-sm mx-auto space-y-6 animate-fade-in">
-      {!showScanner ? (
+      {stage === 'form' && (
         <>
           <div className="text-center space-y-2">
             <h2 className="text-2xl font-semibold tracking-tight">Welcome back</h2>
@@ -78,15 +100,29 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
                   <FormItem>
                     <FormLabel>Mobile Number</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your mobile number" {...field} />
+                      <div className="relative">
+                        <SmartphoneIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input 
+                          placeholder="Enter your 10-digit mobile number" 
+                          className="pl-10" 
+                          {...field} 
+                        />
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               
-              <Button type="submit" className="w-full">
-                Continue with Fingerprint
+              <Button type="submit" className="w-full" disabled={sendingOtp}>
+                {sendingOtp ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Sending OTP...
+                  </>
+                ) : (
+                  "Continue"
+                )}
               </Button>
             </form>
           </Form>
@@ -100,7 +136,18 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
             </p>
           </div>
         </>
-      ) : (
+      )}
+
+      {stage === 'otp' && (
+        <OtpVerification 
+          mobileNumber={mobile}
+          onVerify={handleOtpVerify}
+          onResend={handleOtpResend}
+          onBack={() => setStage('form')}
+        />
+      )}
+      
+      {stage === 'fingerprint' && (
         <div className="text-center space-y-8">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight">Verify Your Identity</h2>
@@ -116,7 +163,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           
           <Button 
             variant="outline" 
-            onClick={() => setShowScanner(false)}
+            onClick={() => setStage('otp')}
             className="mt-4"
           >
             Go Back

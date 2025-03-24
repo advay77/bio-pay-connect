@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,15 +14,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Loader2 } from 'lucide-react';
+import { Loader2, SmartphoneIcon, User } from 'lucide-react';
 import FingerPrintScanner from './FingerPrintScanner';
+import OtpVerification from './OtpVerification';
+import { toast } from "sonner";
+
+const mobileRegex = /^[6-9]\d{9}$/;
 
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
-  mobile: z.string().min(10, {
-    message: "Mobile number must be at least 10 digits.",
+  mobile: z.string().regex(mobileRegex, {
+    message: "Please enter a valid 10-digit Indian mobile number",
   }),
   userType: z.enum(["customer", "merchant"], {
     required_error: "Please select a user type.",
@@ -36,9 +40,10 @@ interface RegisterFormProps {
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
-  const [stage, setStage] = React.useState<'form' | 'fingerprint'>('form');
-  const [fingerprintRegistered, setFingerprintRegistered] = React.useState(false);
-  const [formValues, setFormValues] = React.useState<FormValues | null>(null);
+  const [stage, setStage] = useState<'form' | 'otp' | 'fingerprint'>('form');
+  const [sendingOtp, setSendingOtp] = useState(false);
+  const [fingerprintRegistered, setFingerprintRegistered] = useState(false);
+  const [formValues, setFormValues] = useState<FormValues | null>(null);
   
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -51,7 +56,24 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
   const handleFormSubmit = (values: FormValues) => {
     setFormValues(values);
-    setStage('fingerprint');
+    setSendingOtp(true);
+    
+    // Simulate sending OTP (replace with actual API call)
+    setTimeout(() => {
+      setSendingOtp(false);
+      setStage('otp');
+      toast.success("OTP sent to your mobile number");
+    }, 1500);
+  };
+
+  const handleOtpVerify = (success: boolean) => {
+    if (success) {
+      setStage('fingerprint');
+    }
+  };
+
+  const handleOtpResend = () => {
+    // Logic for resending OTP is handled within the OtpVerification component
   };
 
   const handleFingerprintComplete = (success: boolean) => {
@@ -68,7 +90,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
   return (
     <div className="w-full max-w-md mx-auto space-y-8 animate-fade-in">
-      {stage === 'form' ? (
+      {stage === 'form' && (
         <>
           <div className="text-center">
             <h2 className="text-2xl font-semibold tracking-tight">Create your account</h2>
@@ -89,7 +111,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   <FormItem>
                     <FormLabel>Full Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your full name" {...field} />
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input placeholder="Enter your full name" className="pl-10" {...field} />
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -103,7 +128,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   <FormItem>
                     <FormLabel>Mobile Number</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your mobile number" {...field} />
+                      <div className="relative">
+                        <SmartphoneIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input placeholder="Enter your 10-digit mobile number" className="pl-10" {...field} />
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -141,13 +169,40 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                 )}
               />
               
-              <Button type="submit" className="w-full">
-                Continue to Fingerprint Registration
+              <Button type="submit" className="w-full" disabled={sendingOtp}>
+                {sendingOtp ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Sending OTP...
+                  </>
+                ) : (
+                  "Continue"
+                )}
               </Button>
             </form>
           </Form>
+          
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground">
+              Already have an account?{" "}
+              <a href="/login" className="text-primary hover:underline">
+                Login
+              </a>
+            </p>
+          </div>
         </>
-      ) : (
+      )}
+
+      {stage === 'otp' && formValues && (
+        <OtpVerification 
+          mobileNumber={formValues.mobile}
+          onVerify={handleOtpVerify}
+          onResend={handleOtpResend}
+          onBack={() => setStage('form')}
+        />
+      )}
+      
+      {stage === 'fingerprint' && (
         <div className="text-center space-y-6">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight">Register Your Fingerprint</h2>
@@ -176,10 +231,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           ) : (
             <Button 
               variant="outline" 
-              onClick={() => setStage('form')}
+              onClick={() => setStage('otp')}
               className="mt-4"
             >
-              Go Back to Form
+              Go Back
             </Button>
           )}
         </div>
