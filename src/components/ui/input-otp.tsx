@@ -42,7 +42,7 @@ const InputOTPSlot = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "relative flex h-12 w-10 items-center justify-center border-y border-r border-input bg-transparent text-lg transition-all first:rounded-l-md first:border-l last:rounded-r-md",
+          "relative flex h-12 w-10 items-center justify-center backdrop-blur-md bg-black/30 border border-cyan-800/50 text-lg transition-all first:rounded-l-md first:border-l last:rounded-r-md shadow-[0_0_10px_rgba(0,255,204,0.2)]",
           className
         )}
         {...props}
@@ -56,18 +56,30 @@ const InputOTPSlot = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "relative flex h-12 w-10 items-center justify-center border-y border-r border-input bg-transparent text-lg transition-all first:rounded-l-md first:border-l last:rounded-r-md",
-        isActive && "z-10 ring-2 ring-ring ring-offset-background",
+        "relative flex h-12 w-10 items-center justify-center backdrop-blur-md bg-black/30 border border-cyan-800/50 text-lg transition-all first:rounded-l-md first:border-l last:rounded-r-md shadow-[0_0_10px_rgba(0,255,204,0.2)]",
+        isActive && "z-10 ring-2 ring-cyan-500/70 ring-offset-background",
         className
       )}
       {...props}
     >
-      {char}
+      {/* Holographic glow effect when active */}
+      {isActive && (
+        <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-md blur-sm" />
+      )}
+      
+      {/* Character display */}
+      <div className="relative z-10 text-cyan-50 font-mono">
+        {char}
+      </div>
+      
       {hasFakeCaret && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
+          <div className="h-4 w-px animate-caret-blink bg-cyan-400 duration-1000" />
         </div>
       )}
+      
+      {/* Bottom glow line */}
+      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
     </div>
   )
 })
@@ -78,7 +90,7 @@ const InputOTPSeparator = React.forwardRef<
   React.ComponentPropsWithoutRef<"div">
 >(({ ...props }, ref) => (
   <div ref={ref} role="separator" {...props}>
-    <Dot />
+    <Dot className="text-cyan-500" />
   </div>
 ))
 InputOTPSeparator.displayName = "InputOTPSeparator"
