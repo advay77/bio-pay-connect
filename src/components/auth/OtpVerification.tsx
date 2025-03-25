@@ -89,24 +89,24 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
       </div>
 
       <div className="space-y-4">
-        <div>
-          <InputOTP 
-            maxLength={6} 
-            value={otp} 
-            onChange={setOtp} 
-            disabled={loading}
-            render={({ slots }) => (
-              <InputOTPGroup>
-                {slots.map((slot, index) => (
-                  <InputOTPSlot key={index} {...slot} index={index} />
-                ))}
-              </InputOTPGroup>
-            )}
-          />
-          <p className="text-xs text-muted-foreground mt-2 text-center">
-            Enter the 6-digit code sent to your mobile
-          </p>
-        </div>
+        <InputOTP 
+          maxLength={6} 
+          value={otp} 
+          onChange={setOtp}
+          disabled={loading}
+        >
+          <InputOTPGroup>
+            <InputOTPSlot index={0} />
+            <InputOTPSlot index={1} />
+            <InputOTPSlot index={2} />
+            <InputOTPSlot index={3} />
+            <InputOTPSlot index={4} />
+            <InputOTPSlot index={5} />
+          </InputOTPGroup>
+        </InputOTP>
+        <p className="text-xs text-muted-foreground mt-2 text-center">
+          Enter the 6-digit code sent to your mobile
+        </p>
 
         <Button 
           onClick={handleVerify} 
