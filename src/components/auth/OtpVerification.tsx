@@ -26,6 +26,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
   const [loading, setLoading] = useState(false);
   const [timer, setTimer] = useState(30);
   const [isResending, setIsResending] = useState(false);
+  const [serverOtp, setServerOtp] = useState<string | null>(null);
 
   // Timer countdown for resend OTP
   useEffect(() => {
@@ -37,8 +38,41 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
     }
   }, [timer]);
 
+  // Effect to send OTP when component mounts
+  useEffect(() => {
+    sendOtp();
+  }, []);
+
+  // Function to send SMS OTP
+  const sendOtp = async () => {
+    try {
+      setLoading(true);
+      
+      // Generate a 6-digit OTP
+      const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      console.log('Generated OTP:', generatedOtp); // For testing purposes
+      
+      // In a production environment, we would call an API to send the SMS
+      // For demo purposes, we'll simulate the API call and store the OTP locally
+      // This would normally be done on the server side
+      
+      // Simulate API call to send SMS
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Store the OTP temporarily (in a real app, this would be stored server-side)
+      setServerOtp(generatedOtp);
+      
+      toast.success("OTP sent to your mobile number");
+      setLoading(false);
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      toast.error("Failed to send OTP. Please try again.");
+      setLoading(false);
+    }
+  };
+
   // Handle OTP verification
-  const handleVerify = () => {
+  const handleVerify = async () => {
     // Validation check
     if (otp.length !== 6) {
       toast.error("Please enter the complete 6-digit OTP");
@@ -47,11 +81,13 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
 
     setLoading(true);
     
-    // Simulate OTP verification (replace with actual API call)
-    setTimeout(() => {
-      // For demo purposes, we'll accept any 6-digit OTP
-      // In production, this would validate against a backend service
-      const isValid = otp.length === 6;
+    try {
+      // In a real app, this would be an API call to verify the OTP
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Compare the entered OTP with the server OTP
+      // In production, this verification would happen on the server
+      const isValid = otp === serverOtp;
       
       if (isValid) {
         toast.success("OTP verified successfully");
@@ -60,23 +96,34 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
         toast.error("Invalid OTP. Please try again.");
         onVerify(false);
       }
-      
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      toast.error("Failed to verify OTP. Please try again.");
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   // Handle resend OTP
-  const handleResend = () => {
+  const handleResend = async () => {
     setIsResending(true);
     
-    // Simulate OTP resend (replace with actual API call)
-    setTimeout(() => {
-      toast.success("A new OTP has been sent to your mobile number");
-      setTimer(30);
-      setIsResending(false);
+    try {
+      // Reset OTP field
       setOtp('');
+      
+      // Call the send OTP function again
+      await sendOtp();
+      
+      setTimer(30);
+      toast.success("A new OTP has been sent to your mobile number");
       onResend();
-    }, 1000);
+    } catch (error) {
+      console.error("Error resending OTP:", error);
+      toast.error("Failed to resend OTP. Please try again.");
+    } finally {
+      setIsResending(false);
+    }
   };
 
   return (

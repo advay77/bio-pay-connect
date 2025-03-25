@@ -34,6 +34,11 @@ const Register = () => {
         </Button>
         
         <div className="bg-card border border-border shadow-lg rounded-xl p-8">
+          <div className="mb-4">
+            <p className="text-sm text-muted-foreground mb-4">
+              For demonstration purposes, the OTP will be shown in the browser console. In a production app, the OTP would be sent via real SMS to your mobile number.
+            </p>
+          </div>
           <RegisterForm onSubmit={handleRegister} />
         </div>
       </div>
