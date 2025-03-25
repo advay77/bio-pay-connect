@@ -34,6 +34,22 @@ const InputOTPSlot = React.forwardRef<
   React.ComponentPropsWithoutRef<"div"> & { index: number }
 >(({ index, className, ...props }, ref) => {
   const inputOTPContext = React.useContext(OTPInputContext)
+  
+  // Ensure inputOTPContext and slots exist before accessing them
+  if (!inputOTPContext || !inputOTPContext.slots || !inputOTPContext.slots[index]) {
+    // Return a placeholder div if the context or slot is not available
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "relative flex h-12 w-10 items-center justify-center border-y border-r border-input bg-transparent text-lg transition-all first:rounded-l-md first:border-l last:rounded-r-md",
+          className
+        )}
+        {...props}
+      />
+    )
+  }
+  
   const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index]
 
   return (
