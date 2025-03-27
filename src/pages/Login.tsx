@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from 'lucide-react';
 import LoginForm from '@/components/auth/LoginForm';
+import { toast } from 'sonner';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,6 +12,18 @@ const Login = () => {
   const handleLogin = (data: { mobile: string, fingerprint: boolean }) => {
     console.log('Login data:', data);
     // In a real app, we would verify credentials here
+    toast.success('Login successful!', {
+      description: 'You are now logged in.',
+    });
+    
+    // For demo purpose, set a default user type
+    sessionStorage.setItem('user', JSON.stringify({
+      name: 'Demo User',
+      mobile: data.mobile,
+      userType: 'merchant', // Default to merchant for demo
+      fingerprint: data.fingerprint,
+    }));
+    
     setTimeout(() => {
       navigate('/dashboard');
     }, 1000);

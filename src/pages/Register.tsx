@@ -13,8 +13,18 @@ const Register = () => {
     console.log('Registration data:', data);
     // In a real app, we would save user data here
     toast.success('Registration successful!', {
-      description: 'Your account has been created.',
+      description: `Your ${data.userType === 'merchant' ? 'merchant' : 'customer'} account has been created.`,
     });
+    
+    // Save the user data in session storage for the demo
+    sessionStorage.setItem('user', JSON.stringify({
+      name: data.name,
+      email: data.email,
+      mobile: data.mobile,
+      userType: data.userType,
+      fingerprint: data.fingerprint,
+    }));
+    
     setTimeout(() => {
       navigate('/dashboard');
     }, 1500);
