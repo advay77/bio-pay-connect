@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -109,8 +108,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   };
 
   // Ensure we pass a valid userData object to MerchantVerification
-  const getMerchantVerificationData = (): FormValues => {
-    // If formValues is null, provide default values that satisfy the FormValues type
+  const getMerchantVerificationData = (): {
+    name: string;
+    email: string;
+    mobile: string;
+    userType: string;
+  } => {
+    // If formValues is null, provide default values that satisfy the required type
     return formValues || {
       name: "",
       email: "",
