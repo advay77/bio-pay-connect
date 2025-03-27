@@ -8,6 +8,7 @@ interface FeatureCardProps {
   description: string;
   glowColor?: string;
   className?: string;
+  onClick?: () => void;
 }
 
 const FeatureCard: React.FC<FeatureCardProps> = ({ 
@@ -15,12 +16,15 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   title, 
   description,
   glowColor = "from-blue-400/20 to-cyan-500/10",
-  className 
+  className,
+  onClick
 }) => {
   return (
     <div 
+      onClick={onClick}
       className={cn(
         "bg-[#070b29]/60 backdrop-blur-md border border-white/10 rounded-xl p-6 hover-lift hover:border-white/20 transition-all duration-300 relative group overflow-hidden",
+        onClick && "cursor-pointer",
         className
       )}
     >

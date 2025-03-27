@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,17 +7,18 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Fingerprint, Smartphone, Mail, Edit, ExternalLink, UserRound } from 'lucide-react';
 import { toast } from 'sonner';
+import FeatureCard from '@/components/dashboard/FeatureCard';
 
 const Profile = () => {
-  // Mock user data
-  const user = {
-    name: 'Arun Patel',
-    userType: 'customer',
-    mobile: '+91 9876543210',
-    email: 'arun.patel@example.com',
-    registrationDate: 'June 15, 2023',
-    biometricRegistered: true,
-  };
+  const [userData, setUserData] = useState<any>(null);
+  
+  // Fetch user data from session storage on component mount
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem('user');
+    if (storedUser) {
+      setUserData(JSON.parse(storedUser));
+    }
+  }, []);
   
   const handleEditProfile = () => {
     toast.info('Edit profile functionality will be implemented in the next version.');
@@ -39,13 +40,13 @@ const Profile = () => {
               <CardContent className="pt-6 flex flex-col items-center text-center">
                 <Avatar className="h-24 w-24 mb-4">
                   <AvatarFallback className="text-2xl bg-primary/10 text-primary">
-                    {user.name.split(' ').map(n => n[0]).join('')}
+                    {userData?.name ? userData.name.split(' ').map((n: string) => n[0]).join('') : 'U'}
                   </AvatarFallback>
                 </Avatar>
                 
-                <h2 className="text-xl font-semibold">{user.name}</h2>
+                <h2 className="text-xl font-semibold">{userData?.name || 'User'}</h2>
                 <p className="text-muted-foreground">
-                  {user.userType === 'customer' ? 'Customer' : 'Merchant'}
+                  {userData?.userType === 'merchant' ? 'Merchant' : 'Customer'}
                 </p>
                 
                 <div className="flex items-center justify-center mt-2 space-x-1 text-sm text-muted-foreground">
@@ -84,7 +85,7 @@ const Profile = () => {
                     </div>
                     <div>
                       <h3 className="text-sm font-medium text-muted-foreground">Full Name</h3>
-                      <p className="mt-1">{user.name}</p>
+                      <p className="mt-1">{userData?.name || 'Not Available'}</p>
                     </div>
                   </div>
                   
@@ -94,7 +95,7 @@ const Profile = () => {
                     </div>
                     <div>
                       <h3 className="text-sm font-medium text-muted-foreground">Mobile Number</h3>
-                      <p className="mt-1">{user.mobile}</p>
+                      <p className="mt-1">{userData?.mobile || 'Not Available'}</p>
                     </div>
                   </div>
                   
@@ -104,7 +105,7 @@ const Profile = () => {
                     </div>
                     <div>
                       <h3 className="text-sm font-medium text-muted-foreground">Email Address</h3>
-                      <p className="mt-1">{user.email}</p>
+                      <p className="mt-1">{userData?.email || 'Not Available'}</p>
                     </div>
                   </div>
                 </div>
@@ -122,7 +123,7 @@ const Profile = () => {
                       <div className="flex items-center justify-between">
                         <div>
                           <h3 className="text-sm font-medium">Fingerprint Authentication</h3>
-                          {user.biometricRegistered ? (
+                          {userData?.fingerprint ? (
                             <p className="mt-1 text-sm text-green-600">Registered</p>
                           ) : (
                             <p className="mt-1 text-sm text-amber-600">Not Registered</p>

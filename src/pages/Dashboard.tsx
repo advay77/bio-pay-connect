@@ -1,20 +1,28 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MainLayout from '@/components/layout/MainLayout';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { ArrowUpRight, ArrowDownRight, DollarSign, CreditCard, ChevronRight, QrCode, ReceiptIndianRupee, Wallet } from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, DollarSign, CreditCard, ChevronRight, QrCode, ReceiptIndianRupee, Wallet, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import WalletCard from '@/components/wallet/WalletCard';
 import TransactionItem from '@/components/wallet/TransactionItem';
 import ReceiveMoneyPanel from '@/components/merchant/ReceiveMoneyPanel';
+import StatCard from '@/components/dashboard/StatCard';
 
 const Dashboard = () => {
   const [showReceiveMoney, setShowReceiveMoney] = useState(false);
-  const isMerchant = true; // This would come from user context in a real app
+  const [userData, setUserData] = useState<any>(null);
+  
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem('user');
+    if (storedUser) {
+      setUserData(JSON.parse(storedUser));
+    }
+  }, []);
 
-  // Chart data
+  const isMerchant = userData?.userType === 'merchant';
+
   const chartData = [
     { name: 'Jan', amount: 2400 },
     { name: 'Feb', amount: 1398 },
@@ -25,7 +33,6 @@ const Dashboard = () => {
     { name: 'Jul', amount: 4300 },
   ];
 
-  // Pie chart data for spending categories
   const pieData = [
     { name: 'Shopping', value: 540 },
     { name: 'Food', value: 620 },
@@ -36,7 +43,6 @@ const Dashboard = () => {
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
-  // Transaction data
   const recentTransactions = [
     {
       id: 1,
@@ -64,7 +70,6 @@ const Dashboard = () => {
     }
   ];
 
-  // Format number as currency
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -73,7 +78,6 @@ const Dashboard = () => {
     }).format(value);
   };
 
-  // Toggle receive money panel
   const toggleReceiveMoney = () => {
     setShowReceiveMoney(!showReceiveMoney);
   };
@@ -86,7 +90,7 @@ const Dashboard = () => {
         <div className="container mx-auto p-4 space-y-6">
           <div className="flex flex-col md:flex-row justify-between gap-4 mb-8">
             <div>
-              <h1 className="text-3xl font-bold">Welcome back, Alex</h1>
+              <h1 className="text-3xl font-bold">Welcome back, {userData?.name || 'User'}</h1>
               <p className="text-muted-foreground">Here's what's happening with your account today.</p>
             </div>
             <div className="flex gap-2">
@@ -102,6 +106,29 @@ const Dashboard = () => {
               <Button variant="outline">Scheduled Payments</Button>
               <Button>Add Money</Button>
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <StatCard 
+              value={userData?.name || 'Not Available'}
+              label="Account Holder"
+              className="bg-gradient-to-br from-indigo-900/40 to-indigo-700/20"
+            />
+            <StatCard 
+              value={userData?.email || 'Not Available'}
+              label="Email Address"
+              className="bg-gradient-to-br from-purple-900/40 to-purple-700/20"
+            />
+            <StatCard 
+              value={userData?.mobile || 'Not Available'}
+              label="Mobile Number"
+              className="bg-gradient-to-br from-cyan-900/40 to-cyan-700/20"
+            />
+            <StatCard 
+              value={userData?.userType === 'merchant' ? 'Merchant' : 'Customer'}
+              label="Account Type"
+              className="bg-gradient-to-br from-blue-900/40 to-blue-700/20"
+            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

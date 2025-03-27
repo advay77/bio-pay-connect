@@ -6,12 +6,14 @@ interface StatCardProps {
   value: string;
   label: string;
   className?: string;
+  icon?: React.ReactNode;
 }
 
 const StatCard: React.FC<StatCardProps> = ({ 
   value, 
   label,
-  className 
+  className,
+  icon
 }) => {
   return (
     <div 
@@ -30,9 +32,14 @@ const StatCard: React.FC<StatCardProps> = ({
       <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-white/10 transition-opacity duration-300"></div>
       
       {/* Stat content */}
-      <div className="text-center relative z-10">
-        <h3 className="text-3xl font-bold mb-1 bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">{value}</h3>
-        <p className="text-white/60 text-sm">{label}</p>
+      <div className={cn("text-center relative z-10", icon && "flex items-center gap-3")}>
+        {icon && <div className="flex-shrink-0">{icon}</div>}
+        <div className={icon ? "text-left" : "text-center"}>
+          <h3 className="text-3xl font-bold mb-1 bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent truncate">
+            {value}
+          </h3>
+          <p className="text-white/60 text-sm">{label}</p>
+        </div>
       </div>
       
       {/* Shimmer effect on hover */}
