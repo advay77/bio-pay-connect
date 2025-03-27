@@ -114,12 +114,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
     mobile: string;
     userType: string;
   } => {
-    // If formValues is null, provide default values that satisfy the required type
-    return formValues || {
-      name: "",
-      email: "",
-      mobile: "",
-      userType: "merchant"
+    // Always return an object with required properties
+    return {
+      name: formValues?.name || "",
+      email: formValues?.email || "",
+      mobile: formValues?.mobile || "",
+      userType: formValues?.userType || "merchant"
     };
   };
 
