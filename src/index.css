@@ -188,12 +188,97 @@
   }
 }
 
+/* Float animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Slow spin animation */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Gradient animation */
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 3s ease infinite;
+}
+
+.bg-size-200 {
+  background-size: 200% 100%;
+}
+
+/* Floating particles animation */
+@keyframes floatParticle {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(10px, -10px) scale(1.5);
+    opacity: 0.8;
+  }
+}
+
 /* G.S. Dhakad special signature style */
 .author-signature {
   @apply font-semibold text-sm relative;
   background: linear-gradient(90deg, #00ffcc, #3b82f6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.letter-spacing-2 {
+  letter-spacing: 0.2em;
+}
+
+/* 3D hover effect */
+.hover-3d {
+  transition: transform 0.2s ease;
+  transform-style: preserve-3d;
+}
+
+.hover-3d:hover {
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
 }
 
 /* Custom scrollbar */
