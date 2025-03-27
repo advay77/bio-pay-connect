@@ -108,6 +108,17 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
     }
   };
 
+  // Ensure we pass a valid userData object to MerchantVerification
+  const getMerchantVerificationData = (): FormValues => {
+    // If formValues is null, provide default values that satisfy the FormValues type
+    return formValues || {
+      name: "",
+      email: "",
+      mobile: "",
+      userType: "merchant"
+    };
+  };
+
   return (
     <div className="w-full max-w-md mx-auto space-y-8 animate-fade-in">
       {stage === 'form' && (
@@ -262,9 +273,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
         />
       )}
       
-      {stage === 'merchantVerification' && formValues && (
+      {stage === 'merchantVerification' && (
         <MerchantVerification
-          userData={formValues}
+          userData={getMerchantVerificationData()}
           onComplete={handleMerchantVerificationComplete}
           onBack={() => setStage('otp')}
         />

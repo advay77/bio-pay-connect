@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { toast } from "sonner";
-import { X, ChevronLeft, CheckCircle, Fingerprint } from 'lucide-react';
+import { X, ChevronLeft, CheckCircle, Fingerprint, QrCode as QrCodeIcon } from 'lucide-react';
 import QRCode from 'qrcode.react';
 import FingerPrintScanner from '../auth/FingerPrintScanner';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -24,7 +23,6 @@ const ReceiveMoneyPanel: React.FC<ReceiveMoneyPanelProps> = ({ onClose }) => {
   const [loading, setLoading] = useState<boolean>(false);
   
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Only allow numbers and decimals
     const value = e.target.value.replace(/[^0-9.]/g, '');
     setAmount(value);
   };
@@ -41,9 +39,7 @@ const ReceiveMoneyPanel: React.FC<ReceiveMoneyPanelProps> = ({ onClose }) => {
     
     setLoading(true);
     
-    // Simulate API call to generate payment link
     setTimeout(() => {
-      // Create a payment link with the amount and limit
       const link = `biopay://payment?amount=${amount}&limit=${limit[0]}&merchant=ABC_Store&time=${Date.now()}`;
       setPaymentLink(link);
       setStage('qr');
@@ -55,7 +51,6 @@ const ReceiveMoneyPanel: React.FC<ReceiveMoneyPanelProps> = ({ onClose }) => {
     if (success) {
       setStage('success');
       
-      // Simulate payment completion
       setTimeout(() => {
         onClose();
         toast.success(`Payment of $${amount} received successfully!`);
@@ -73,35 +68,29 @@ const ReceiveMoneyPanel: React.FC<ReceiveMoneyPanelProps> = ({ onClose }) => {
     }
   };
   
-  // 3D Wallet Model component
   const WalletModel = () => {
     return (
       <group position={[0, 0, 0]}>
-        {/* Wallet base */}
         <mesh position={[0, 0, 0]} receiveShadow castShadow>
           <boxGeometry args={[3, 0.4, 2]} />
           <meshStandardMaterial color="#1a1a2e" metalness={0.7} roughness={0.2} />
         </mesh>
         
-        {/* Wallet inner */}
         <mesh position={[0, 0.21, 0]} receiveShadow castShadow>
           <boxGeometry args={[2.8, 0.1, 1.8]} />
           <meshStandardMaterial color="#0a0a1a" metalness={0.4} roughness={0.4} />
         </mesh>
         
-        {/* Card 1 */}
         <mesh position={[-0.6, 0.3, 0]} rotation={[0, 0.2, 0]} receiveShadow castShadow>
           <boxGeometry args={[1.8, 0.05, 1.2]} />
           <meshStandardMaterial color="#00a6ed" metalness={0.8} roughness={0.2} />
         </mesh>
         
-        {/* Card 2 */}
         <mesh position={[0.6, 0.35, 0]} rotation={[0, -0.2, 0]} receiveShadow castShadow>
           <boxGeometry args={[1.8, 0.05, 1.2]} />
           <meshStandardMaterial color="#00ccaa" metalness={0.8} roughness={0.2} />
         </mesh>
         
-        {/* Glowing element */}
         <mesh position={[0, 0.5, 0]}>
           <sphereGeometry args={[0.3, 32, 32]} />
           <meshStandardMaterial color="#00ffcc" emissive="#00ffcc" emissiveIntensity={2} />
@@ -336,7 +325,7 @@ const ReceiveMoneyPanel: React.FC<ReceiveMoneyPanelProps> = ({ onClose }) => {
               <div className="relative z-10 bg-gradient-to-br from-cyan-950/60 to-blue-950/60 backdrop-blur-xl border border-cyan-800/30 rounded-3xl p-8 shadow-2xl max-w-md">
                 <div className="mb-6 text-center">
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-500 mb-4">
-                    <QrCode className="h-6 w-6" />
+                    <QrCodeIcon className="h-6 w-6" />
                   </div>
                   <h3 className="text-xl font-semibold text-white">Demo Mode</h3>
                   <p className="text-sm text-muted-foreground mt-1">
@@ -394,17 +383,21 @@ const ReceiveMoneyPanel: React.FC<ReceiveMoneyPanelProps> = ({ onClose }) => {
               </div>
               
               <div className="mt-6 bg-black/30 rounded-lg p-4 w-full max-w-md">
-                <div className="flex justify-between text-sm mb-2">
+                <div className="flex justify-between text-sm mb-3">
                   <span className="text-muted-foreground">Merchant</span>
                   <span className="text-white">Your Business Name</span>
                 </div>
-                <div className="flex justify-between text-sm mb-2">
+                <div className="flex justify-between text-sm mb-3">
                   <span className="text-muted-foreground">Amount</span>
                   <span className="text-white">${parseFloat(amount).toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-sm mb-3">
                   <span className="text-muted-foreground">Transaction ID</span>
                   <span className="text-white">TXN-{Math.floor(Math.random() * 1000000)}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Date</span>
+                  <span className="text-white">{new Date().toLocaleString()}</span>
                 </div>
               </div>
             </div>
