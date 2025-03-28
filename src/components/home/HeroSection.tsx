@@ -42,12 +42,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigate, mousePosition }) =>
           </p>
           
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-white mb-6">
-            The Future of Payment
-            <span 
-              className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 bg-size-200 animate-gradient-x my-2"
-            >
-              Is Here
-            </span>
+            <span className="text-gradient-text-animation">Revolutionary</span>
+            <br />
+            <span className="text-gradient-text-animation-delay-1">Biometric Authentication</span>
+            <br />
+            <span className="text-gradient-text-animation-delay-2">Payment System</span>
           </h1>
           
           <p className="text-xl text-white/70 mt-6 max-w-2xl"
@@ -55,8 +54,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigate, mousePosition }) =>
               transform: `translateY(${mousePosition.y * 5}px)`
             }}
           >
-            Join thousands of forward-thinking individuals and businesses embracing the next
-            evolution in financial technology.
+            Secure, fast, and convenient payments using advanced fingerprint and palm vein recognition technology. No cards, no passwords, just you.
           </p>
         </div>
         
@@ -70,18 +68,34 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigate, mousePosition }) =>
             onClick={() => navigate('/register')} 
             className="relative py-6 text-lg z-10"
           >
-            Create Free Account
+            Get Started Free
           </HolographicButton>
           
           <Button 
-            onClick={() => navigate('/contact')} 
+            onClick={() => {}} 
             variant="outline" 
             className="text-lg py-6 text-white border-white/20 bg-white/5 hover:bg-white/10 hover:text-white backdrop-blur-sm relative group overflow-hidden"
             size="lg"
           >
             <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
-            Contact Sales
+            Watch Demo
           </Button>
+        </div>
+
+        {/* Feature badges */}
+        <div className="flex flex-wrap justify-center gap-4 mt-8">
+          <div className="bg-white/5 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 flex items-center gap-2 hover:bg-white/10 transition-all">
+            <Fingerprint className="h-4 w-4 text-cyan-400" />
+            <span className="text-sm text-white/80">Fingerprint ID</span>
+          </div>
+          <div className="bg-white/5 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 flex items-center gap-2 hover:bg-white/10 transition-all">
+            <Fingerprint className="h-4 w-4 text-purple-400" />
+            <span className="text-sm text-white/80">Military-grade Encryption</span>
+          </div>
+          <div className="bg-white/5 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 flex items-center gap-2 hover:bg-white/10 transition-all">
+            <Fingerprint className="h-4 w-4 text-green-400" />
+            <span className="text-sm text-white/80">Palm Vein Verification</span>
+          </div>
         </div>
       </div>
       
@@ -90,7 +104,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ navigate, mousePosition }) =>
         <div className="w-8 h-12 rounded-full border-2 border-white/30 flex justify-center p-2">
           <div className="w-1 h-3 bg-white/50 rounded-full animate-pulse"></div>
         </div>
-        <span className="text-white/50 text-sm mt-2">Scroll Down</span>
+        <span className="text-white/50 text-sm mt-2">Scroll to explore</span>
       </div>
     </div>
   );

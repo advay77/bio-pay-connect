@@ -62,6 +62,53 @@
   }
 }
 
+/* Text gradient animations for cycling colors */
+.text-gradient-text-animation {
+  background: linear-gradient(to right, #ff7e5f, #feb47b, #7ee8fa, #80d0c7, #c471ed, #f7797d);
+  background-size: 400% 400%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradient-text 8s ease infinite;
+}
+
+.text-gradient-text-animation-delay-1 {
+  background: linear-gradient(to right, #c471ed, #f7797d, #ff7e5f, #feb47b, #7ee8fa, #80d0c7);
+  background-size: 400% 400%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradient-text 8s ease infinite;
+  animation-delay: 1s;
+}
+
+.text-gradient-text-animation-delay-2 {
+  background: linear-gradient(to right, #80d0c7, #c471ed, #f7797d, #ff7e5f, #feb47b, #7ee8fa);
+  background-size: 400% 400%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradient-text 8s ease infinite;
+  animation-delay: 2s;
+}
+
+/* Section heading text gradients */
+.text-gradient-blue {
+  @apply bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent;
+}
+
+.text-gradient-purple {
+  @apply bg-gradient-to-r from-purple-400 via-violet-400 to-purple-500 bg-clip-text text-transparent;
+}
+
+.text-gradient-cyan {
+  @apply bg-gradient-to-r from-cyan-400 via-teal-400 to-cyan-500 bg-clip-text text-transparent;
+}
+
+.text-gradient-green {
+  @apply bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 bg-clip-text text-transparent;
+}
+
 /* Custom Animations and Effects */
 .glass-morphism {
   @apply bg-white bg-opacity-5 backdrop-filter backdrop-blur-lg border border-white/10;
@@ -155,6 +202,19 @@
 @keyframes drawLine {
   to {
     stroke-dashoffset: 0;
+  }
+}
+
+/* Gradient text animation */
+@keyframes gradient-text {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 

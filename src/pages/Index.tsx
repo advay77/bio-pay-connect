@@ -93,7 +93,7 @@ const Index = () => {
               </div>
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              BioPay Connect
+              BioHoloPay
             </span>
           </div>
           
@@ -122,6 +122,14 @@ const Index = () => {
           <div className="flex gap-2">
             <Button 
               variant="ghost" 
+              onClick={() => navigate('/dashboard')}
+              className="text-white hover:text-white hover:bg-white/10 relative overflow-hidden group"
+            >
+              <div className="absolute inset-0 w-1/12 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+              Dashboard
+            </Button>
+            <Button 
+              variant="ghost" 
               onClick={() => navigate('/login')}
               className="text-white hover:text-white hover:bg-white/10 relative overflow-hidden group"
             >
@@ -138,84 +146,80 @@ const Index = () => {
       {/* Enhanced Hero Section */}
       <HeroSection navigate={navigate} mousePosition={mousePosition} />
       
-      {/* Live Transaction Verification Section */}
-      <div className="relative z-10 py-16 bg-gradient-to-b from-[#05081F] to-[#050a2c]">
+      {/* Credit Card Showcase Section */}
+      <div className="relative z-10 py-16 bg-gradient-to-b from-[#05081F] to-[#070b29]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Live Transaction Verification</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 mx-auto mb-6 rounded-full"></div>
+            <h2 className="text-3xl font-bold mb-4 text-gradient-cyan">Compatible With All Your Cards</h2>
             <p className="text-white/70 max-w-2xl mx-auto">
-              Watch real-time biometric payment processing with military-grade security.
+              Link your existing cards and bank accounts to your biometric profile for seamless authentication.
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto bg-[#070b29]/60 backdrop-blur-md border border-white/10 rounded-xl p-6 shadow-lg transform hover:scale-[1.01] transition-transform duration-300 ease-out">
-            <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-cyan-500/80 rounded-tl-lg"></div>
-            <div className="absolute -top-3 -right-3 w-6 h-6 border-t-2 border-r-2 border-cyan-500/80 rounded-tr-lg"></div>
-            <div className="absolute -bottom-3 -left-3 w-6 h-6 border-b-2 border-l-2 border-cyan-500/80 rounded-bl-lg"></div>
-            <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-cyan-500/80 rounded-br-lg"></div>
+          <div className="flex flex-col md:flex-row gap-6 max-w-5xl mx-auto">
+            {/* Credit Card - Quantum Bank */}
+            <div className="flex-1 p-1 bg-gradient-to-br from-blue-500/30 to-purple-500/30 rounded-2xl group hover:scale-105 transition-transform duration-300">
+              <div className="bg-[#070b29]/80 rounded-2xl p-6 h-full border border-white/10 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="flex justify-between items-start">
+                  <div className="text-xl font-bold text-white">Quantum Bank</div>
+                  <div className="text-sm text-white/60">09/28</div>
+                </div>
+                <div className="my-8 text-white/80 tracking-widest">
+                  **** **** **** 4291
+                </div>
+                <div className="absolute bottom-0 right-0 w-24 h-24 rounded-full bg-gradient-to-r from-blue-500/30 to-purple-500/20 blur-xl"></div>
+              </div>
+            </div>
             
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-2">
-                <div className="h-3 w-3 rounded-full bg-[#3defc0] animate-pulse"></div>
-                <span className="uppercase tracking-wider text-sm font-semibold text-[#3defc0]">Biometric Transaction Monitor</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center text-white/60 text-sm gap-1">
-                  <RefreshCw className="h-4 w-4 animate-spin-slow" />
-                  <span>Live updating</span>
+            {/* Credit Card - Neo Finance */}
+            <div className="flex-1 p-1 bg-gradient-to-br from-cyan-500/30 to-teal-500/30 rounded-2xl group hover:scale-105 transition-transform duration-300">
+              <div className="bg-[#070b29]/80 rounded-2xl p-6 h-full border border-white/10 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="flex justify-between items-start">
+                  <div className="text-xl font-bold text-white">Neo Finance</div>
+                  <div className="text-sm text-white/60">12/27</div>
                 </div>
-                <Button variant="outline" size="sm" className="text-xs h-8 border-white/10 bg-white/5 hover:bg-white/10">
-                  Filter
-                </Button>
+                <div className="my-8 text-white/80 tracking-widest">
+                  **** **** **** 7835
+                </div>
+                <div className="absolute bottom-0 right-0 w-24 h-24 rounded-full bg-gradient-to-r from-cyan-500/30 to-teal-500/20 blur-xl"></div>
               </div>
             </div>
-
-            <LiveTransactionFeed />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-              <div className="bg-[#070b29]/80 rounded-xl p-6 border border-white/10 hover:border-cyan-500/40 transition-colors duration-300">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="h-10 w-10 rounded-full bg-blue-500/20 flex items-center justify-center relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400/30 to-cyan-400/10 animate-pulse"></div>
-                    <CreditCard className="h-5 w-5 text-blue-400 relative z-10" />
-                  </div>
-                  <div>
-                    <p className="text-white/60 text-sm">Total Daily Volume</p>
-                    <h3 className="text-3xl font-bold text-white">$12,459.20</h3>
-                  </div>
+            
+            {/* Credit Card - Future Credit */}
+            <div className="flex-1 p-1 bg-gradient-to-br from-pink-500/30 to-red-500/30 rounded-2xl group hover:scale-105 transition-transform duration-300">
+              <div className="bg-[#070b29]/80 rounded-2xl p-6 h-full border border-white/10 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="flex justify-between items-start">
+                  <div className="text-xl font-bold text-white">Future Credit</div>
+                  <div className="text-sm text-white/60">04/29</div>
                 </div>
-              </div>
-              <div className="bg-[#070b29]/80 rounded-xl p-6 border border-white/10 hover:border-green-500/40 transition-colors duration-300">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="h-10 w-10 rounded-full bg-green-500/20 flex items-center justify-center relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-green-400/30 to-emerald-400/10 animate-pulse"></div>
-                    <ShieldCheck className="h-5 w-5 text-green-400 relative z-10" />
-                  </div>
-                  <div>
-                    <p className="text-white/60 text-sm">Verification Success Rate</p>
-                    <h3 className="text-3xl font-bold text-white">99.8%</h3>
-                  </div>
+                <div className="my-8 text-white/80 tracking-widest">
+                  **** **** **** 1658
                 </div>
+                <div className="absolute bottom-0 right-0 w-24 h-24 rounded-full bg-gradient-to-r from-pink-500/30 to-red-500/20 blur-xl"></div>
               </div>
             </div>
+          </div>
 
-            <div className="text-center mt-8">
-              <Button variant="link" className="text-[#3defc0] hover:text-[#35d6ab] gap-1 group">
-                See full transaction history
-                <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </div>
+          <div className="text-center mt-8 max-w-3xl mx-auto">
+            <p className="text-white/70 mb-6">
+              Biometric authentication works with all major banks and financial institutions. Your data stays secure with our advanced encryption.
+            </p>
+            <Button variant="link" className="text-cyan-400 hover:text-cyan-300 flex items-center gap-1 mx-auto">
+              View All Supported Banks
+              <ArrowRight className="h-4 w-4" />
+            </Button>
           </div>
         </div>
       </div>
 
       {/* Feature Cards with enhanced animations */}
-      <div className="relative z-10 py-16 bg-gradient-to-b from-[#050a2c] to-[#060c35]">
+      <div className="relative z-10 py-16 bg-gradient-to-b from-[#070b29] to-[#060c35]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Cutting-Edge Features</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mb-6 rounded-full"></div>
+            <h2 className="text-4xl font-bold mb-2 text-gradient-purple">Revolutionary Payment Features</h2>
             <p className="text-white/70 max-w-2xl mx-auto">
               Experience the future of transactions with cutting-edge biometric security and seamless integration.
             </p>
@@ -223,37 +227,37 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FeatureCard 
-              icon={<Fingerprint className="h-6 w-6 text-yellow-300" />}
+              icon={<div className="text-2xl">👆</div>}
               title="Fingerprint Authentication"
               description="Ultra-secure fingerprint recognition with liveness detection and anti-spoofing technology."
               glowColor="from-yellow-400/20 to-amber-500/10"
             />
             <FeatureCard 
-              icon={<Scan className="h-6 w-6 text-cyan-300" />}
+              icon={<div className="text-2xl">✋</div>}
               title="Palm Vein Scanning"
               description="Advanced infrared palm vein pattern recognition for unhackable identity verification."
               glowColor="from-cyan-400/20 to-teal-500/10"
             />
             <FeatureCard 
-              icon={<Building className="h-6 w-6 text-blue-300" />}
+              icon={<div className="text-2xl">🏦</div>}
               title="Multi-Bank Support"
               description="Connect and manage all your bank accounts and cards through a single biometric profile."
               glowColor="from-blue-400/20 to-indigo-500/10"
             />
             <FeatureCard 
-              icon={<Shield className="h-6 w-6 text-red-400" />}
+              icon={<div className="text-2xl">🛡️</div>}
               title="Real-time Fraud Detection"
               description="AI-powered fraud monitoring system that detects and prevents unauthorized access attempts."
               glowColor="from-red-400/20 to-rose-500/10"
             />
             <FeatureCard 
-              icon={<Lock className="h-6 w-6 text-purple-300" />}
+              icon={<div className="text-2xl">🔒</div>}
               title="Quantum Encryption"
               description="Next-generation encryption that protects your data against both conventional and quantum threats."
               glowColor="from-purple-400/20 to-violet-500/10"
             />
             <FeatureCard 
-              icon={<Globe className="h-6 w-6 text-green-300" />}
+              icon={<div className="text-2xl">🌎</div>}
               title="Global Acceptance"
               description="Use your biometric payment profile at millions of locations worldwide with instant conversion."
               glowColor="from-green-400/20 to-emerald-500/10"
@@ -290,61 +294,144 @@ const Index = () => {
         </div>
       </div>
 
-      {/* 3D Model Section with interactive elements */}
-      <div className="relative z-10 py-16 bg-gradient-to-b from-[#05081F] to-[#070a24]">
+      {/* Live Transaction Verification Section */}
+      <div className="relative z-10 py-16 bg-gradient-to-b from-[#05081F] to-[#050a2c]">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-            <div className="flex-1">
-              <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Advanced Biometric Authentication</h2>
-              <p className="text-white/70 mb-8">Our state-of-the-art fingerprint and palm vein recognition technology provides military-grade security for all your transactions.</p>
-              
-              <div className="space-y-6">
-                <div className="flex items-start gap-4 group hover:bg-white/5 p-3 rounded-lg transition-colors cursor-pointer">
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-green-500/30 to-teal-500/10 flex items-center justify-center mt-1 group-hover:scale-110 transition-transform">
-                    <Zap className="h-5 w-5 text-green-400" />
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-2 text-gradient-green">Live Transaction Verification</h2>
+            <p className="text-white/70 max-w-2xl mx-auto">
+              Watch real-time biometric payment processing with military-grade security.
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto bg-[#070b29]/60 backdrop-blur-md border border-white/10 rounded-xl p-6 shadow-lg transform hover:scale-[1.01] transition-transform duration-300 ease-out">
+            <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-cyan-500/80 rounded-tl-lg"></div>
+            <div className="absolute -top-3 -right-3 w-6 h-6 border-t-2 border-r-2 border-cyan-500/80 rounded-tr-lg"></div>
+            <div className="absolute -bottom-3 -left-3 w-6 h-6 border-b-2 border-l-2 border-cyan-500/80 rounded-bl-lg"></div>
+            <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-cyan-500/80 rounded-br-lg"></div>
+            
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-2">
+                <div className="h-3 w-3 rounded-full bg-[#3defc0] animate-pulse"></div>
+                <span className="uppercase tracking-wider text-sm font-semibold text-[#3defc0]">BIOMETRIC TRANSACTION MONITOR</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center text-white/60 text-sm gap-1">
+                  <RefreshCw className="h-4 w-4 animate-spin-slow" />
+                  <span>Live updating</span>
+                </div>
+                <Button variant="outline" size="sm" className="text-xs h-8 border-white/10 bg-white/5 hover:bg-white/10">
+                  Filter
+                </Button>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <div className="bg-[#070b29]/80 rounded-lg p-3 mb-2 flex items-center justify-between border border-white/5 hover:bg-[#070b29]/60 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400">
+                    📱
                   </div>
-                  <div className="flex-1">
-                    <h4 className="font-medium text-white group-hover:text-green-400 transition-colors">Liveness Detection</h4>
-                    <p className="text-white/60 text-sm mt-1">Ensures the biometric sample is from a living person, not a replica.</p>
+                  <div>
+                    <p className="text-sm font-semibold text-white">FutureHealth</p>
+                    <p className="text-xs text-white/60">Just now</p>
                   </div>
                 </div>
-                
-                <div className="flex items-start gap-4 group hover:bg-white/5 p-3 rounded-lg transition-colors cursor-pointer">
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500/30 to-cyan-500/10 flex items-center justify-center mt-1 group-hover:scale-110 transition-transform">
-                    <Cpu className="h-5 w-5 text-blue-400" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-medium text-white group-hover:text-blue-400 transition-colors">Tamper-Proof Hardware</h4>
-                    <p className="text-white/60 text-sm mt-1">Specially designed secure elements protect biometric data from physical attacks.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4 group hover:bg-white/5 p-3 rounded-lg transition-colors cursor-pointer">
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-purple-500/30 to-violet-500/10 flex items-center justify-center mt-1 group-hover:scale-110 transition-transform">
-                    <Lock className="h-5 w-5 text-purple-400" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-medium text-white group-hover:text-purple-400 transition-colors">End-to-End Encryption</h4>
-                    <p className="text-white/60 text-sm mt-1">Your biometric data is encrypted from the moment of capture to verification.</p>
-                  </div>
+                <div className="text-right">
+                  <p className="text-lg font-bold text-white">$47.28</p>
+                  <p className="text-xs text-green-400">Verified</p>
                 </div>
               </div>
               
-              <HolographicButton className="mt-10" onClick={() => {}}>
-                <span className="flex items-center">
-                  Learn How It Works
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </span>
-              </HolographicButton>
+              <div className="bg-[#070b29]/80 rounded-lg p-3 mb-2 flex items-center justify-between border border-white/5 hover:bg-[#070b29]/60 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
+                    📱
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-white">NeoFoods</p>
+                    <p className="text-xs text-white/60">Just now</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-lg font-bold text-white">$40.08</p>
+                  <p className="text-xs text-green-400">Verified</p>
+                </div>
+              </div>
+              
+              <div className="bg-[#070b29]/80 rounded-lg p-3 mb-2 flex items-center justify-between border border-white/5 hover:bg-[#070b29]/60 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-400">
+                    ☕
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-white">CyberCafe</p>
+                    <p className="text-xs text-white/60">2 mins ago</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-lg font-bold text-white">$15.99</p>
+                  <p className="text-xs text-green-400">Verified</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+              <div className="bg-[#070b29]/80 rounded-xl p-6 border border-white/10 hover:border-cyan-500/40 transition-colors duration-300">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-10 w-10 rounded-full bg-blue-500/20 flex items-center justify-center relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400/30 to-cyan-400/10 animate-pulse"></div>
+                    <CreditCard className="h-5 w-5 text-blue-400 relative z-10" />
+                  </div>
+                  <div>
+                    <p className="text-white/60 text-sm">Total Daily Volume</p>
+                    <h3 className="text-3xl font-bold text-white">$12,459.20</h3>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-[#070b29]/80 rounded-xl p-6 border border-white/10 hover:border-green-500/40 transition-colors duration-300">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-10 w-10 rounded-full bg-green-500/20 flex items-center justify-center relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-green-400/30 to-emerald-400/10 animate-pulse"></div>
+                    <ShieldCheck className="h-5 w-5 text-green-400 relative z-10" />
+                  </div>
+                  <div>
+                    <p className="text-white/60 text-sm">Verification Success Rate</p>
+                    <h3 className="text-3xl font-bold text-white">99.8%</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center mt-8">
+              <Button variant="link" className="text-[#3defc0] hover:text-[#35d6ab] gap-1 group">
+                See full transaction history
+                <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
+              </Button>
             </div>
             
-            <div className="flex-1 h-[400px] w-full bg-[#070b29]/40 rounded-2xl p-4 border border-white/10 relative">
-              <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-cyan-500/80 rounded-tl-lg"></div>
-              <div className="absolute -top-3 -right-3 w-6 h-6 border-t-2 border-r-2 border-cyan-500/80 rounded-tr-lg"></div>
-              <div className="absolute -bottom-3 -left-3 w-6 h-6 border-b-2 border-l-2 border-cyan-500/80 rounded-bl-lg"></div>
-              <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-cyan-500/80 rounded-br-lg"></div>
-              <FingerprintModelCanvas className="w-full h-full" />
+            <div className="border-t border-white/10 mt-6 pt-2 text-center">
+              <p className="text-xs text-white/40">SYS:OK • NET:ACTIVE • SEC:MAXIMUM</p>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Final CTA Section */}
+      <div className="relative z-10 py-20 bg-gradient-to-b from-[#050a2c] to-[#05081F]">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient-blue">The Future of Payment Is Here</h2>
+          <p className="text-white/70 max-w-2xl mx-auto mb-10">
+            Join thousands of forward-thinking individuals and businesses embracing the next evolution in financial technology.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <HolographicButton onClick={() => navigate('/register')} className="py-6 text-lg">
+              Create Free Account
+            </HolographicButton>
+            <Button variant="outline" onClick={() => navigate('/contact')} className="py-6 text-lg text-white border-white/20 bg-white/5 hover:bg-white/10">
+              Contact Sales
+            </Button>
           </div>
         </div>
       </div>
@@ -359,7 +446,7 @@ const Index = () => {
                   <Fingerprint className="h-6 w-6 text-cyan-400" />
                 </div>
                 <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                  BioPay Connect
+                  BioHoloPay
                 </span>
               </div>
               <p className="text-white/60 text-sm mb-4">
@@ -414,7 +501,7 @@ const Index = () => {
           </div>
           
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-white/40 text-sm">© 2023 BioPay Connect. All rights reserved.</p>
+            <p className="text-white/40 text-sm">© 2023 BioHoloPay. All rights reserved.</p>
             
             <div className="flex gap-6">
               <a href="#" className="text-white/40 text-sm hover:text-white transition-colors">Privacy Policy</a>
@@ -448,6 +535,12 @@ const Index = () => {
               </svg>
               PCI DSS Compliant
             </div>
+          </div>
+          
+          <div className="mt-8 text-center">
+            <p className="text-gradient bg-gradient-to-r from-cyan-400 to-blue-500 text-sm font-medium">
+              Made with ❤️ by G.S. Dhakad
+            </p>
           </div>
         </div>
       </footer>
